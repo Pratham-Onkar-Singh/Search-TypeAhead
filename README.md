@@ -50,32 +50,54 @@ A full-stack search typeahead application with distributed caching (consistent h
 - Node.js v18+
 - PostgreSQL 14+
 - Redis 6+
+- (Or just Docker + Docker Compose)
 
 ## Setup & Running
 
-### 1. Database Setup
+### Option A: Docker (Recommended)
+
+```bash
+# Start all services (PostgreSQL, Redis, Backend, Frontend)
+docker compose up --build
+
+# In another terminal, load the dataset into PostgreSQL
+# First, place your AOL dataset files in data/aol-search/
+docker compose exec backend node src/scripts/loadDataset.js
+```
+
+Open `http://localhost:3000` — everything is running.
+
+To stop:
+```bash
+docker compose down          # stop containers (keeps data)
+docker compose down -v       # stop and delete database volume
+```
+
+### Option B: Manual Setup
+
+#### 1. Database Setup
 
 ```bash
 sudo -u postgres psql -c "CREATE ROLE \"$(whoami)\" WITH LOGIN SUPERUSER;"
 sudo -u postgres psql -c "CREATE DATABASE typeahead OWNER \"$(whoami)\";"
 ```
 
-### 2. Start Redis
+#### 2. Start Redis
 
 ```bash
 sudo systemctl start redis-server
 ```
 
-### 3. Backend Setup
+#### 3. Backend Setup
 
 ```bash
 cd backend
 npm install
-npm run load-data    # Generates 120K synthetic queries and loads into PostgreSQL
+npm run load-data    # Loads AOL dataset into PostgreSQL
 npm start            # Starts API server on port 5000
 ```
 
-### 4. Frontend Setup
+#### 4. Frontend Setup
 
 ```bash
 cd frontend
@@ -83,7 +105,7 @@ npm install
 npm start            # Starts React dev server on port 3000
 ```
 
-### 5. Open the App
+#### 5. Open the App
 
 Navigate to `http://localhost:3000`
 
