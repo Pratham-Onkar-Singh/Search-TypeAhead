@@ -1,0 +1,31 @@
+# Dependencies
+node_modules/
+
+# Build output
+frontend/build/
+
+# Dataset (too large for git, download separately)
+data/aol-search/
+data/AOL-user-ct-collection/
+data/*.csv
+data/*.txt
+
+# Environment variables
+.env
+.env.local
+.env.production
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Claude Code
+.claude/
+
+# Logs
+*.log
+npm-debug.log*
